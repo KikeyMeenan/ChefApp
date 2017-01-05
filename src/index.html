@@ -8,12 +8,28 @@
         </style>
     </head>
     <body>
-        <p>test!</p>
+        <div class="header">
+            <div class="container">
+                <div class="page-header">
+                    <h4><a href="#/">Recipes</a></h1>
+                    <h4><a href="#/Ingredients">Ingredients</a></h1>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div ng-view="">
+
+            </div>
+        </div>
 
         <script type="text/javascript" src="/lib/angular/angular.js"></script>
         <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
         <script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
         <script type="text/javascript" src="/lib/angular-mocks/angular-mocks.js"></script>
         <script type="text/javascript" src="/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+        <script type="text/javascript" src="chef-core/recipes/service.js"></script>
+        <script type="text/javascript" src="chef-app/app.js"></script>
+        <script type="text/javascript" src="chef-app/recipes/recipes.controller.js"></script>
     </body>
 </html>

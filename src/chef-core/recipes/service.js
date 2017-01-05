@@ -1,7 +1,7 @@
 angular.module('chefCore', ['ngResource'])
     .factory('RecipeService', function($resource){
-        var token = 'teddybear';
-        return $resource('recipes/:recipeId', { recipeId: '@id' }, {
+        var token = 'myToken';
+        return $resource('recipesApi/:recipeId', { recipeId: '@id' }, {
             update: {
                 method: 'PUT',
                 headers: { 'authToken': token }

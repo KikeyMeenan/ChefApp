@@ -20,8 +20,10 @@ module.exports = function(config) {
       'src/lib/angular-route/angular-route.js',
       'src/lib/angular-mocks/angular-mocks.js',
       'src/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-      'src/chef-core/recipes/service.js',
-      'spec/chef-core/recipes/service.spec.js'
+      'src/chef-core/*/service.js',
+      'src/chef-app/app.js',
+      'src/chef-app/recipes/recipes.controller.js',
+      'spec/*/*/*.js',
     ],
 
 
