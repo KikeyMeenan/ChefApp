@@ -7,7 +7,7 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
             })
             .when('/Ingredients', {
                 templateUrl: 'chef-app/ingredients/home.html',
-                controller: 'IngredientsController'
+                controller: 'IngredientsController as vm'
             })
             .otherwise({
                 redirectTo: '/'
@@ -18,6 +18,7 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
             {
                 "recipeId": 1,
                 "name": "Egg Salad",
+                "type": "Salad",
                 "rating": 4,
                 "difficulty": 1,
                 "vegetarian": true,
@@ -26,6 +27,7 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
             {
                 "recipeId": 2,
                 "name": "Fried Rice",
+                "type": "Chinese",
                 "rating": 6,
                 "difficulty": 5,
                 "vegetarian": true,
@@ -34,6 +36,7 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
             {
                 "recipeId": 3,
                 "name": "Hamburger",
+                "type": "American",
                 "rating": 5,
                 "difficulty": 4,
                 "vegetarian": false,
@@ -78,7 +81,26 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
                 "vegetarian": false,
                 "vegan": false
             }
-        ]
+        ];
+
+        var types = [
+            {
+                "typeId": 1,
+                "name": "Salad"
+            },
+            {
+                "typeId": 2,
+                "name": "Chinese"
+            },
+            {
+                "typeId": 3,
+                "name": "American"
+            },
+            {
+                "typeId": 4,
+                "name": "Italian"
+            }            
+        ];
         
         var headers = {
             headers: {'Content-Type': 'application/json'}
@@ -91,6 +113,10 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
         $httpBackend.whenGET(function(s){
             return (s.indexOf('ingredientsApi') !== -1);
         }).respond(200, ingredients, headers);
+
+        $httpBackend.whenGET(function(s){
+            return (s.indexOf('typesApi') !== -1);
+        }).respond(200, types, headers);
 
         $httpBackend.whenGET(/.*/).passThrough();
     });

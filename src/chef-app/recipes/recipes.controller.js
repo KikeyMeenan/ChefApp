@@ -1,11 +1,17 @@
 angular.module('chefApp')
-    .controller('RecipesController', function($scope, RecipeService){
+    .controller('RecipesController', function($scope, TypeService, IngredientService){
         var vm = this;
         
-        vm.results = [];
+        vm.types = [];
+        vm.ingredients = [];
+        vm.filters = [];
 
-        RecipeService.query(function(data){
-            vm.results = data;
+        TypeService.query(function(data){
+            vm.types = data;
+        });
+
+        IngredientService.query(function(data){
+            vm.ingredients = data;
         });
 
     });
