@@ -1,7 +1,7 @@
 angular.module('chefCore')
-    .factory('RecipeService', function($resource){
+    .factory('IngredientService', function($resource){
         var token = 'myToken';
-        return $resource('recipesApi/:recipeId', { recipeId: '@id' }, {
+        return $resource('ingredientsApi/:ingredientId', { ingredientId: '@id' }, {
             update: {
                 method: 'PUT',
                 headers: { 'authToken': token }

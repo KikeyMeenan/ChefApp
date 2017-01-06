@@ -14,7 +14,7 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
             });
     })
     .run(function($httpBackend){
-        var data = [
+        var recipes = [
             {
                 "recipeId": 1,
                 "name": "Egg Salad",
@@ -40,6 +40,45 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
                 "vegan": false
             }
         ];
+
+        var ingredients = [
+            {
+                "ingredientId" : 1,
+                "name": "Onion",
+                "vegetarian": true,
+                "vegan": true
+            },
+            {
+                "ingredientId" : 2,
+                "name": "Chicken",
+                "vegetarian": false,
+                "vegan": false
+            },
+            {
+                "ingredientId" : 3,
+                "name": "Milk",
+                "vegetarian": true,
+                "vegan": false
+            },
+            {
+                "ingredientId" : 4,
+                "name": "Tomato",
+                "vegetarian": true,
+                "vegan": true
+            },
+            {
+                "ingredientId" : 5,
+                "name": "Eggs",
+                "vegetarian": true,
+                "vegan": false
+            },
+            {
+                "ingredientId" : 6,
+                "name": "Beef",
+                "vegetarian": false,
+                "vegan": false
+            }
+        ]
         
         var headers = {
             headers: {'Content-Type': 'application/json'}
@@ -47,7 +86,11 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
 
         $httpBackend.whenGET(function(s){
             return (s.indexOf('recipesApi') !== -1);
-        }).respond(200, data, headers);
+        }).respond(200, recipes, headers);
+
+        $httpBackend.whenGET(function(s){
+            return (s.indexOf('ingredientsApi') !== -1);
+        }).respond(200, ingredients, headers);
 
         $httpBackend.whenGET(/.*/).passThrough();
     });
