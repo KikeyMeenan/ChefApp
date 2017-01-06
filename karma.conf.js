@@ -22,7 +22,8 @@ module.exports = function(config) {
       'src/lib/angular-bootstrap/ui-bootstrap-tpls.js',
       'src/*/app.js',
       'src/chef-core/*/service.js',
-      'src/chef-app/recipes/recipes.controller.js',
+      'src/chef-app/recipes/*.controller.js',
+      'src/chef-app/recipes/recipe-result.directive.js',
       'spec/*/*/*.js',
     ],
 

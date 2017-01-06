@@ -1,21 +1,5 @@
-angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
-    .config(function($routeProvider){
-        $routeProvider
-            .when('/', {
-                templateUrl: 'chef-app/recipes/recipes.html',
-                controller: 'RecipesController as vm'
-            })
-            .when('/Ingredients', {
-                templateUrl: 'chef-app/ingredients/home.html',
-                controller: 'IngredientsController as vm'
-            })
-            .otherwise({
-                redirectTo: '/'
-            });
-    })
-    .run(function($httpBackend){
-        
-        var ingredients = [
+describe('Results Controller', function () {
+    var ingredients = [
             {
                 "ingredientId" : 1,
                 "name": "Onion",
@@ -104,9 +88,7 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
                     ingredients[0],
                     ingredients[3],
                     ingredients[4]
-                ],
-                "typeMatch": false,
-                "ingredientMatch": false
+                ]
             },
             {
                 "recipeId": 2,
@@ -119,14 +101,12 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
                 "ingredients": [
                     ingredients[4],
                     ingredients[6]
-                ],
-                "typeMatch": false,
-                "ingredientMatch": false
+                ]
             },
             {
                 "recipeId": 3,
                 "name": "Hamburger",
-                "type": types[2],
+                "type": types[3],
                 "rating": 5,
                 "difficulty": 4,
                 "vegetarian": false,
@@ -137,27 +117,54 @@ angular.module('chefApp', ['ui.bootstrap', 'ngRoute', 'chefCore', 'ngMockE2E'])
                     ingredients[5],
                     ingredients[7],
                     ingredients[8],
-                ],
-                "typeMatch": false,
-                "ingredientMatch": false
+                ]
             }
         ];
+
+    var Filters = [
+        {
+            "filterType": "type",
+            "id": 2
+        },
+        {
+            "filterType": "type",
+            "id": 3
+        }
+    ]
+
+    var expectedResults = [
+        recipes[1],
+        recipes[2]
+    ]
+
+    var $controller;
+    var $q;
+    var $rootScope;
+    var $scope;
+    var RecipeService;
+
+    beforeEach(module('chefApp'));
+
+    beforeEach(inject(function(_$controller_, _$q_, _$rootScope_, _RecipeService_){
+        $controller = _$controller_;
+        $scope = {};
+        $q = _$q_;
+        $rootScope = _$rootScope_;
+        RecipeService = _RecipeService_;
+    }));
+
+    it('should get all recipes', function(){
+        spyOn(RecipeService, 'query').and.callFake(function(cb){
+            cb(recipes);
+        });
+
+        $scope.Filters = Filters;
+
+        var ctrl = $controller('ResultsController', {
+            $scope: $scope,
+            RecipeService: RecipeService
+        });
         
-        var headers = {
-            headers: {'Content-Type': 'application/json'}
-        };
-
-        $httpBackend.whenGET(function(s){
-            return (s.indexOf('recipesApi') !== -1);
-        }).respond(200, recipes, headers);
-
-        $httpBackend.whenGET(function(s){
-            return (s.indexOf('ingredientsApi') !== -1);
-        }).respond(200, ingredients, headers);
-
-        $httpBackend.whenGET(function(s){
-            return (s.indexOf('typesApi') !== -1);
-        }).respond(200, types, headers);
-
-        $httpBackend.whenGET(/.*/).passThrough();
+        expect(ctrl.results).toBe(expectedResults);
     });
+});
